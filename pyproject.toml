@@ -3,8 +3,8 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "promptlint"
-version = "0.1.0"
+name = "prompt-lint"
+dynamic = ["version"]
 description = "规则式提示词体检工具:离线、确定性、可测试,在调用模型之前先抓住低级问题"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -31,9 +31,15 @@ promptlint = "promptlint.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/yange0793-dot/prompt-lint"
+Repository = "https://github.com/yange0793-dot/prompt-lint"
+Issues = "https://github.com/yange0793-dot/prompt-lint/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+# 版本号只写在 promptlint/__init__.py 一处,pyproject 与 --version 都从那里取
+[tool.setuptools.dynamic]
+version = { attr = "promptlint.__version__" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
