@@ -1,0 +1,7 @@
+- id: promptlint
+  name: promptlint(提示词体检)
+  description: 规则式检查提示词里的模糊表述、全角字符、矛盾指令等低级问题
+  entry: promptlint
+  language: python
+  types: [text]
+  files: '\.(txt|md|prompt)$'
