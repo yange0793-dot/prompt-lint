@@ -31,6 +31,10 @@ def has_errors(findings: list[Finding]) -> bool:
     return any(f.severity == "error" for f in findings)
 
 
+def count_severity(findings: list[Finding], severity: str) -> int:
+    return sum(1 for f in findings if f.severity == severity)
+
+
 def summary(findings: list[Finding]) -> str:
-    counts = {s: sum(1 for f in findings if f.severity == s) for s in ("error", "warn", "info")}
+    counts = {s: count_severity(findings, s) for s in ("error", "warn", "info")}
     return f"{counts['error']} error, {counts['warn']} warn, {counts['info']} info"
