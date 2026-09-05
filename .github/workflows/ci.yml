@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: python -m pip install --upgrade pip
+      - run: pip install -e . pytest
+      - run: pytest -q
+      - name: CLI smoke test
+        run: |
+          promptlint --version
+          promptlint examples/messy-prompt.txt --no-color
+          if promptlint -p "帮我写个东西" --no-color; then
+            echo "expected non-zero exit for error-level findings"
+            exit 1
+          fi
+          promptlint -p "请把这段话总结成 JSON,不超过 100 字。" --json > /dev/null && echo json-ok
