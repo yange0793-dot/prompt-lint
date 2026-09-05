@@ -108,7 +108,7 @@ findings = lint_text("帮我看看这个方案,记得夸我")
 ```yaml
 repos:
   - repo: https://github.com/yange0793-dot/prompt-lint
-    rev: main            # 建议钉到某个 commit 或 tag
+    rev: v0.1.0          # 钉到 tag,别用 main
     hooks:
       - id: promptlint
         files: ^prompts/.*\.(txt|md)$   # 只体检提示词目录,按需改
