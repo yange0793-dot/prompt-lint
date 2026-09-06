@@ -1,5 +1,7 @@
 # promptlint
 
+[![CI](https://github.com/yange0793-dot/prompt-lint/actions/workflows/ci.yml/badge.svg)](https://github.com/yange0793-dot/prompt-lint/actions/workflows/ci.yml)
+
 **规则式提示词体检工具:离线、确定性、可测试——在调用模型之前,先抓住低级问题。**
 Rule-based linter for prompts: offline, deterministic, testable — catch the cheap mistakes before you pay for tokens.
 
