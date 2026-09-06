@@ -29,3 +29,27 @@ def test_messy_example_has_warnings_but_no_error():
 def test_readme_quoted_summary_matches_real_output():
     actual = summary(lint_text(read("examples/messy-prompt.txt")))
     assert actual in read("README.md"), f"README 里的合计行已过期,现在应是:{actual}"
+
+
+def test_readme_test_count_matches_reality():
+    """README 里写的测试数必须等于真实收集到的用例数。
+
+    加这条的由头：README 与仓库描述长期停在「16 项测试」，实际已经 23 项 ——
+    正是这个文件要挡的那种漂移，却漏在了文件自己身上。数字自校验后就不会再飘。
+    """
+    import re
+    import subprocess
+    import sys
+
+    m = re.search(r"#\s*(\d+)\s*项测试", read("README.md"))
+    assert m, "README 里找不到「# N 项测试」那行注释"
+    claimed = int(m.group(1))
+
+    r = subprocess.run([sys.executable, "-m", "pytest", "-q", "--collect-only"],
+                       cwd=ROOT, capture_output=True, text=True)
+    n = re.search(r"(\d+)\s+tests?\s+collected", r.stdout) \
+        or re.search(r"collected\s+(\d+)", r.stdout)
+    assert n, f"数不出实际用例数：{r.stdout[-300:]}"
+    actual = int(n.group(1))
+
+    assert claimed == actual, f"README 写 {claimed} 项，实际收集到 {actual} 项"

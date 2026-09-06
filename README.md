@@ -119,7 +119,7 @@ repos:
 
 ```bash
 pip install -e . pytest
-pytest -q        # 16 项测试
+pytest -q        # 24 项测试
 ```
 
 ## License
